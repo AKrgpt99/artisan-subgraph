@@ -1,0 +1,42 @@
+specVersion: 0.0.2
+schema:
+  file: schema.graphql
+dataSources:
+  - kind: ethereum
+    name: ArtisanERC721
+    network: mumbai
+    source:
+      address: "0xE3b16610b19134df2f36bac972CE70c94C8d690a"
+      abi: ArtisanERC721
+      startBlock: 24398960
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.5
+      language: wasm/assemblyscript
+      entities:
+        - CancelListing
+        - CancelOffer
+        - Listing
+        - Mint
+        - Offer
+        - Sale
+        - Transfer
+      abis:
+        - name: ArtisanERC721
+          file: ArtisanERC721\abis\ArtisanERC721.json
+      eventHandlers:
+        - event: CancelListing((string,string,uint256,uint256,address,address,address,bool),uint256)
+          handler: handleCancelListing
+        - event: CancelOffer((string,string,uint256,uint256,address,address,address,bool),uint256,address)
+          handler: handleCancelOffer
+        - event: Listing((string,string,uint256,uint256,address,address,address,bool),uint256,uint256)
+          handler: handleListing
+        - event: Mint((string,string,uint256,uint256,address,address,address,bool),uint256)
+          handler: handleMint
+        - event: Offer((string,string,uint256,uint256,address,address,address,bool),uint256,uint256,address)
+          handler: handleOffer
+        - event: Sale((string,string,uint256,uint256,address,address,address,bool),uint256,uint256,address,address)
+          handler: handleSale
+        - event: Transfer(indexed address,indexed address,indexed uint256)
+          handler: handleTransfer
+      file: ArtisanERC721\ArtisanERC721.wasm
